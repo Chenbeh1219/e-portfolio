@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beh Yi Chen | Curriculums & Events Repository</title>
+  
+  <style>
+    :root {
+      --bg-base: #030712;
+      --bg-card: rgba(15, 23, 42, 0.75);
+      --neon-cyan: #06b6d4;
+      --neon-purple: #a855f7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-glass: rgba(255, 255, 255, 0.1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2.5rem 1.5rem;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Glow Orbs */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(6, 182, 212, 0.12) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.12) 0%, transparent 40%);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+      padding: 0.6rem 1.4rem;
+      background: rgba(6, 182, 212, 0.08);
+      color: var(--neon-cyan);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .back-btn:hover {
+      background: var(--neon-cyan);
+      color: #030712;
+      box-shadow: 0 0 25px rgba(6, 182, 212, 0.5);
+      transform: translateY(-2px);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 0.8rem;
+      background: linear-gradient(135deg, #f8fafc 30%, var(--neon-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .curriculum-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .curriculum-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      padding: 1.8rem;
+      border-radius: 16px;
+      border: 1px solid var(--border-glass);
+      text-align: center;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .curriculum-card:hover {
+      border-color: rgba(6, 182, 212, 0.6);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 25px rgba(6, 182, 212, 0.15);
+    }
+
+    .poster-placeholder {
+      width: 100%;
+      height: 180px;
+      background-color: #070b19;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      border: 1px dashed rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .curriculum-card h3 {
+      font-size: 1.2rem;
+      color: var(--neon-cyan);
+      margin-bottom: 0.8rem;
+    }
+
+    .curriculum-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 4rem 1rem 2rem 1rem;
+      color: var(--text-muted);
+      margin-top: 5rem;
+      border-top: 1px solid var(--border-glass);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="back-btn">
+      <span>←</span> Back to Portfolio
+    </a>
+
+    <header>
+      <h1>Co-Curricular & <span>Events</span></h1>
+      <p>My event participation, leadership activities, and extracurricular milestones.</p>
+    </header>
+
+    <div class="curriculum-grid">
+      
+      <!-- Empty Box 1 -->
+      <div class="curriculum-card">
+        <div class="poster-placeholder">
+          [ Insert Event Poster / Image Here ]
+        </div>
+        <h3>Event Title 1</h3>
+        <p>Add your event description and details here...</p>
+      </div>
+
+      <!-- Empty Box 2 -->
+      <div class="curriculum-card">
+        <div class="poster-placeholder">
+          [ Insert Event Poster / Image Here ]
+        </div>
+        <h3>Event Title 2</h3>
+        <p>Add your event description and details here...</p>
+      </div>
+
+      <!-- Empty Box 3 -->
+      <div class="curriculum-card">
+        <div class="poster-placeholder">
+          [ Insert Event Poster / Image Here ]
+        </div>
+        <h3>Event Title 3</h3>
+        <p>Add your event description and details here...</p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Beh Yi Chen | Data Engineering E-Portfolio</p>
+  </footer>
+
+</body>
+</html>

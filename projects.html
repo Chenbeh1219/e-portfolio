@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beh Yi Chen | Labs & Projects</title>
+  
+  <style>
+    /* --- 1. VIBRANT CYBER-TECH DESIGN SYSTEM --- */
+    :root {
+      --bg-base: #030712;
+      --neon-cyan: #06b6d4;
+      --neon-purple: #a855f7;
+      --neon-pink: #ec4899;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    /* --- 2. DYNAMIC ANIMATED BACKGROUND & NEON ORBS --- */
+    body {
+      background: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 3rem 1.5rem;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Moving background gradient mesh */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(168, 85, 247, 0.15) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 70%, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
+                  radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+      z-index: -2;
+      animation: meshPulse 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes meshPulse {
+      0% { transform: scale(1); filter: brightness(1); }
+      100% { transform: scale(1.08); filter: brightness(1.2); }
+    }
+
+    /* Floating Glowing Orbs */
+    .orb-1 {
+      position: fixed;
+      top: 10%;
+      left: 10%;
+      width: 350px;
+      height: 350px;
+      background: rgba(168, 85, 247, 0.2);
+      filter: blur(100px);
+      border-radius: 50%;
+      z-index: -1;
+      animation: floatOrb1 8s ease-in-out infinite alternate;
+    }
+
+    .orb-2 {
+      position: fixed;
+      bottom: 10%;
+      right: 10%;
+      width: 400px;
+      height: 400px;
+      background: rgba(6, 182, 212, 0.2);
+      filter: blur(120px);
+      border-radius: 50%;
+      z-index: -1;
+      animation: floatOrb2 10s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatOrb1 {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(40px, 60px); }
+    }
+
+    @keyframes floatOrb2 {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-50px, -40px); }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- 3. BACK BUTTON WITH NEON GLOW --- */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 2.5rem;
+      padding: 0.7rem 1.5rem;
+      background: rgba(6, 182, 212, 0.1);
+      color: var(--neon-cyan);
+      border: 1px solid rgba(6, 182, 212, 0.4);
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+    }
+
+    .back-btn:hover {
+      background: var(--neon-cyan);
+      color: #030712;
+      box-shadow: 0 0 25px rgba(6, 182, 212, 0.6);
+      transform: translateY(-3px);
+    }
+
+    .back-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* --- 4. HEADER WITH GRADIENT GLOW --- */
+    header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 20%, var(--neon-cyan) 60%, var(--neon-purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 10px 30px rgba(6, 182, 212, 0.2);
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    /* --- 5. STUNNING LAB CARDS (With Entry & Hover Animations) --- */
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .lab-card {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 2.2rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      
+      /* Card Entry Animation staggered */
+      animation: cardEntrance 0.8s ease-out backwards;
+    }
+
+    .lab-card:nth-child(1) { animation-delay: 0.1s; }
+    .lab-card:nth-child(2) { animation-delay: 0.2s; }
+    .lab-card:nth-child(3) { animation-delay: 0.3s; }
+    .lab-card:nth-child(4) { animation-delay: 0.4s; }
+    .lab-card:nth-child(5) { animation-delay: 0.5s; }
+    .lab-card:nth-child(6) { animation-delay: 0.6s; }
+
+    @keyframes cardEntrance {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Neon glowing top line on hover */
+    .lab-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+      opacity: 0.3;
+      transition: opacity 0.3s ease;
+    }
+
+    .lab-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(6, 182, 212, 0.6);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(6, 182, 212, 0.25);
+      background: rgba(30, 41, 59, 0.85);
+    }
+
+    .lab-card:hover::before {
+      opacity: 1;
+    }
+
+    .lab-card:active {
+      transform: scale(0.97);
+    }
+
+    .lab-card h3 {
+      color: var(--text-main);
+      margin-bottom: 0.8rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .lab-card p {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .badge {
+      align-self: flex-start;
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(168, 85, 247, 0.15));
+      border: 1px solid rgba(6, 182, 212, 0.4);
+      padding: 0.4rem 1.1rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--neon-cyan);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.1);
+    }
+
+    /* --- 6. FOOTER --- */
+    footer {
+      text-align: center;
+      padding: 4rem 1rem 2rem 1rem;
+      color: var(--text-muted);
+      margin-top: 6rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Neon Background Orbs -->
+  <div class="orb-1"></div>
+  <div class="orb-2"></div>
+
+  <div class="container">
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">
+      <span>←</span> Back to Portfolio
+    </a>
+
+    <!-- Page Header -->
+    <header>
+      <h1>Practical Labs & Projects</h1>
+      <p>An interactive engineering repository featuring hands-on lab experiments, system designs, and code architectures.</p>
+    </header>
+
+    <!-- Lab & Project Cards Grid -->
+    <div class="lab-grid">
+      
+      <!-- Lab 1 -->
+      <a href="#" target="_blank" class="lab-card">
+        <div>
+          <h3>Lab 1: Environment Setup</h3>
+          <p>Initial software installation, workstation configuration, and basic version control testing.</p>
+        </div>
+        <span class="badge">LAB 01</span>
+      </a>
+
+      <!-- Lab 2 -->
+      <a href="#" target="_blank" class="lab-card">
+        <div>
+          <h3>Lab 2: Programming Logic</h3>
+          <p>Developing core procedural algorithms, function structures, and syntax validation protocols.</p>
+        </div>
+        <span class="badge">LAB 02</span>
+      </a>
+
+      <!-- Lab 3 -->
+      <a href="#" target="_blank" class="lab-card">
+        <div>
+          <h3>Lab 3: Data Structures</h3>
+          <p>Implementing optimized arrays, pointer management, and custom object models for data handling.</p>
+        </div>
+        <span class="badge">LAB 03</span>
+      </a>
+
+      <!-- Lab 4 -->
+      <a href="#" target="_blank" class="lab-card">
+        <div>
+          <h3>Lab 4: System Modeling</h3>
+          <p>Designing system workflows, entity-relationship schemas, and structural architectural diagrams.</p>
+        </div>
+        <span class="badge">LAB 04</span>
+      </a>
+
+      <!-- Lab 5 -->
+      <a href="#" target="_blank" class="lab-card">
+        <div>
+          <h3>Lab 5: Pipeline & Integration</h3>
+          <p>Connecting distributed data sources, parsing high-speed data streams, and managing relational databases.</p>
+        </div>
+        <span class="badge">LAB 05</span>
+      </a>
+
+      <!-- Capstone Project -->
+      <a href="#" target="_blank" class="lab-card">
+        <div>
+          <h3>Capstone Project</h3>
+          <p>Comprehensive end-to-end data engineering ecosystem implementation and stress testing.</p>
+        </div>
+        <span class="badge" style="color: var(--neon-purple); border-color: rgba(168, 85, 247, 0.4); box-shadow: 0 0 10px rgba(168, 85, 247, 0.1);">PROJECT</span>
+      </a>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Beh Yi Chen | Data Engineering E-Portfolio</p>
+  </footer>
+
+</body>
+</html>

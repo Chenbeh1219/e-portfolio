@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beh Yi Chen | Data Engineering E-Portfolio</title>
+  
+  <style>
+    /* --- 1. BASE SETTINGS & VARIABLES --- */
+    :root {
+      --bg-main: #0f172a;       /* Deep slate background */
+      --bg-card: #1e293b;       /* Slightly lighter slate for cards */
+      --accent-color: #38bdf8;  /* Vibrant tech blue */
+      --text-main: #f8fafc;     /* Crisp white text */
+      --text-muted: #94a3b8;    /* Gray text for secondary info */
+      --glow-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      position: relative;
+    }
+
+    /* --- 2. TOP-LEFT HAMBURGER MENU ICON & DRAWER --- */
+    .menu-icon-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      width: 46px;
+      height: 46px;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      transition: all 0.3s ease;
+    }
+
+    .menu-icon-btn span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background-color: var(--accent-color);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-icon-btn:hover {
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+      box-shadow: var(--glow-shadow);
+      transform: scale(1.05);
+    }
+
+    .menu-icon-btn:hover span {
+      background-color: #0f172a;
+    }
+
+    /* Slide-out Navigation Drawer */
+    .side-drawer {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 300px;
+      max-width: 85vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(56, 189, 248, 0.3);
+      z-index: 1002;
+      padding: 3rem 2rem;
+      transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 10px 0 40px rgba(0,0,0,0.6);
+      overflow-y: auto;
+    }
+
+    .side-drawer.open {
+      left: 0;
+    }
+
+    .drawer-header {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--accent-color);
+      margin-bottom: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 0.8rem;
+    }
+
+    .drawer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .drawer-links a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 600;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid #334155;
+      display: block;
+      transition: all 0.25s ease;
+    }
+
+    .drawer-links a:hover {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-color);
+      border-color: var(--accent-color);
+      transform: translateX(6px);
+      box-shadow: var(--glow-shadow);
+    }
+
+    /* Backdrop Overlay */
+    .drawer-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(3, 7, 18, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .drawer-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* --- 3. FULL SCREEN HERO SECTION --- */
+    #hero-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background-color: var(--bg-main); 
+      position: relative;
+      color: white;
+      overflow: hidden;
+      padding: 5rem 1.5rem 4rem 1.5rem;
+    }
+
+    .pipeline-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-color);
+      margin-bottom: 1.5rem;
+      animation: fadeInDown 0.8s ease-out;
+      box-shadow: var(--glow-shadow);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent-color);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-color);
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    .title-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 2rem; 
+      margin-bottom: 1rem;
+    }
+
+    .photo-frame {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 0; 
+      background: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.8)), url('image/WhatsApp Image 2026-11-10 at 23.39.42.jpeg') center/cover;
+      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+      animation: morphBlob 8s ease-in-out infinite alternate;
+      box-shadow: var(--glow-shadow); 
+    }
+
+    #hero-section h1 {
+      position: relative;
+      z-index: 1; 
+      font-size: 3.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    #hero-section p {
+      font-size: 1.15rem;
+      color: #cbd5e1;
+      max-width: 620px;
+      animation: fadeInUp 1s ease-out 0.3s both;
+      position: relative;
+      z-index: 1;
+    }
+
+    .scroll-arrow {
+      position: absolute;
+      bottom: 24px;
+      font-size: 1.8rem;
+      color: var(--accent-color);
+      text-decoration: none;
+      animation: bounce 2s infinite, fadeIn 1s ease-out 1s both;
+    }
+
+    /* --- 4. STICKY NAVIGATION --- */
+    nav {
+      position: sticky;
+      top: 0;
+      background-color: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(12px);
+      padding: 0.9rem 1rem;
+      text-align: center;
+      z-index: 99;
+      border-bottom: 1px solid #334155;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.45rem 0.85rem;
+      border-radius: 6px;
+      transition: all 0.25s ease;
+      display: inline-block;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover, nav a.active-nav {
+      background-color: var(--bg-card);
+      color: var(--accent-color);
+      transform: translateY(-2px);
+      box-shadow: var(--glow-shadow);
+    }
+
+    /* --- 5. MAIN LAYOUT & SECTIONS --- */
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    section {
+      padding: 4rem 0;
+      border-bottom: 1px solid #334155;
+    }
+
+    section:last-child {
+      border-bottom: none;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: var(--text-main);
+      border-left: 4px solid var(--accent-color);
+      padding-left: 1rem;
+    }
+
+    /* --- 6. ABOUT SECTION & PROFILE --- */
+    .about-card {
+      background-color: var(--bg-card);
+      padding: 3rem 2rem;
+      border-radius: 16px;
+      border: 1px solid #334155;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .about-card:hover {
+      border-color: var(--accent-color);
+      box-shadow: var(--glow-shadow);
+    }
+
+    .profile-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .profile-pic {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--accent-color);
+      box-shadow: var(--glow-shadow);
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-pic:hover {
+      transform: scale(1.05);
+    }
+
+    .badge-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      margin: 2rem 0;
+    }
+
+    .badge {
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent-color);
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    /* --- 7. GENERAL GRID CARDS --- */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-color);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3), var(--glow-shadow);
+    }
+
+    .card h3 {
+      color: var(--accent-color);
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* --- 8. BUTTONS & LINKEDIN --- */
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem; 
+      margin-top: 1.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: var(--accent-color);
+      color: #0f172a;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #7dd3fc;
+      box-shadow: var(--glow-shadow);
+    }
+
+    .btn-icon {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 46px; 
+      height: 46px;
+      background-color: transparent;
+      color: var(--accent-color);
+      border: 2px solid var(--accent-color);
+      border-radius: 50%;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-icon:hover {
+      background-color: var(--accent-color);
+      color: #0f172a; 
+      box-shadow: var(--glow-shadow);
+    }
+
+    /* --- 9. FLOATING CONTROLS (Bottom-Left & Bottom-Right) --- */
+    .lang-floating-btn {
+      position: fixed;
+      bottom: 24px;
+      left: 20px;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(12px);
+      color: var(--accent-color);
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      padding: 0.6rem 1.15rem;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      z-index: 999;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    }
+
+    .lang-floating-btn:hover {
+      background: var(--accent-color);
+      color: #0f172a;
+      box-shadow: var(--glow-shadow);
+      transform: translateY(-3px);
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      width: 45px;
+      height: 45px;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(10px);
+      color: var(--accent-color);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      font-size: 1.2rem;
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background: var(--accent-color);
+      color: #0f172a;
+      box-shadow: var(--glow-shadow);
+      transform: translateY(-3px);
+    }
+
+    /* --- 10. MOBILE RESPONSIVE OVERLAP FIXES --- */
+    @media (max-width: 768px) {
+      body {
+        padding-bottom: 84px;
+      }
+
+      .menu-icon-btn {
+        top: 12px;
+        left: 12px;
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+      }
+
+      nav {
+        justify-content: flex-start;
+        padding: 0.65rem 0.75rem 0.65rem 64px;
+        gap: 0.35rem;
+        min-height: 66px;
+      }
+
+      nav a {
+        margin: 0;
+        padding: 0.35rem 0.6rem;
+        font-size: 0.82rem;
+      }
+
+      #hero-section h1 {
+        font-size: 2.35rem;
+        letter-spacing: 1px;
+      }
+
+      .title-container {
+        padding: 2rem 1.25rem;
+      }
+
+      .lang-floating-btn {
+        bottom: 18px;
+        left: 14px;
+        padding: 0.5rem 0.95rem;
+        font-size: 0.8rem;
+      }
+
+      .back-to-top {
+        bottom: 18px;
+        right: 14px;
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    /* --- 11. FOOTER --- */
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      background-color: #020617;
+      color: var(--text-muted);
+      border-top: 1px solid #334155;
+    }
+
+    /* --- 12. ANIMATIONS --- */
+    @keyframes morphBlob {
+      0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+      100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top-Left Hamburger Menu Button -->
+  <button class="menu-icon-btn" onclick="toggleDrawer()" aria-label="Toggle Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Slide-Out Drawer Menu (Includes Navigation & Contact Me) -->
+  <div id="sideDrawer" class="side-drawer">
+    <div class="drawer-header" data-en="Navigation" data-ms="Navigasi">Navigation</div>
+    <ul class="drawer-links">
+      <li><a href="index.html" data-en="🏠 Home" data-ms="🏠 Utama">🏠 Home</a></li>
+      <li><a href="academics.html" data-en="📚 Academics Website" data-ms="📚 Laman Akademik">📚 Academics Website</a></li>
+      <li><a href="projects.html" data-en="💻 Projects Website" data-ms="💻 Laman Projek">💻 Projects Website</a></li>
+      <li><a href="curriculums.html" data-en="🏆 Curriculums Website" data-ms="🏆 Laman Kokurikulum">🏆 Curriculums Website</a></li>
+    </ul>
+
+    <div class="drawer-header" data-en="📞 Contact Me" data-ms="📞 Hubungi Saya">📞 Contact Me</div>
+    <ul class="drawer-links">
+      <li><a href="https://github.com/Chenbeh1219" target="_blank">🐙 GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/beh-yi-chen-098758243/" target="_blank">💼 LinkedIn</a></li>
+      <li><a href="mailto:behyichen1219@gmail.com">✉️ Email</a></li>
+    </ul>
+  </div>
+  <div id="drawerOverlay" class="drawer-overlay" onclick="toggleDrawer()"></div>
+
+  <!-- Bottom-Left Language Toggle Button -->
+  <button id="langToggleBtn" class="lang-floating-btn" onclick="toggleLanguage()">
+    🌐 BM (Bahasa Melayu)
+  </button>
+
+  <!-- Bottom-Right Back-to-Top Button -->
+  <a href="#hero-section" id="backToTopBtn" class="back-to-top" title="Back to Top">↑</a>
+
+  <!-- FULL SCREEN HERO SECTION -->
+  <header id="hero-section">
+    <div class="pipeline-badge" data-en="<span class='status-dot'></span> UTM Data Engineering Pipeline: Active" data-ms="<span class='status-dot'></span> Saluran Kejuruteraan Data UTM: Aktif">
+      <span class="status-dot"></span> UTM Data Engineering Pipeline: Active
+    </div>
+
+    <div class="title-container">
+      <div class="photo-frame"></div>
+      <h1 data-en="Welcome ✨<br>Beh Yi Chen's<br>E-Portfolio." data-ms="Selamat Datang ✨<br>E-Portfolio<br>Beh Yi Chen.">Welcome ✨<br>Beh Yi Chen's<br>E-Portfolio.</h1>
+    </div>
+    <p data-en="My name is Beh Yi Chen, a 1st year student in Bachelor of Computer Science (Data Engineering) at Universiti Teknologi Malaysia." data-ms="Nama saya Beh Yi Chen, seorang pelajar tahun pertama Ijazah Sarjana Muda Sains Komputer (Kejuruteraan Data) di Universiti Teknologi Malaysia.">My name is Beh Yi Chen, a 1st year student in Bachelor of Computer Science (Data Engineering) at Universiti Teknologi Malaysia.</p>
+    <a href="#nav-bar" class="scroll-arrow">↓</a>
+  </header>
+
+  <!-- STICKY NAVIGATION -->
+  <nav id="nav-bar">
+    <a href="#about" class="nav-link" data-en="About Me" data-ms="Tentang Saya">About Me</a>
+    <a href="#education" class="nav-link" data-en="Education" data-ms="Pendidikan">Education</a>
+    <a href="#leadership" class="nav-link" data-en="Leadership & Skills" data-ms="Kepimpinan & Kemahiran">Leadership & Skills</a>
+    <a href="#experience" class="nav-link" data-en="Experience" data-ms="Pengalaman">Experience</a>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    
+    <!-- UPGRADED ABOUT SECTION -->
+    <section id="about">
+      <div class="about-card">
+        
+        <div class="profile-container">
+          <!-- Exact user image path preserved -->
+          <img src="image/WhatsApp Image 2026-10-11 at 23.28.41.jpeg" alt="Beh Yi Chen" class="profile-pic">
+          <h2 style="border-left: none; padding-left: 0; margin-bottom: 0;" data-en="Professional Profile" data-ms="Profil Profesional">Professional Profile</h2>
+        </div>
+        
+        <p style="font-size: 1.1rem; max-width: 800px; margin: 0 auto; color: var(--text-muted);" 
+           data-en="Hello! I am Beh Yi Chen, originally from Bukit Mertajam, Penang. I am currently pursuing my Bachelor of Computer Science in Data Engineering at UTM. My approach to learning is highly analytical—I focus on deeply understanding the 'why' behind system design, digital logic, and code logic rather than just memorizing syntax."
+           data-ms="Helo! Saya Beh Yi Chen, berasal dari Bukit Mertajam, Pulau Pinang. Saya kini sedang menuntut dalam Ijazah Sarjana Muda Sains Komputer (Kejuruteraan Data) di UTM. Pendekatan pembelajaran saya adalah sangat analitikal—saya memberi tumpuan kepada pemahaman mendalam tentang 'mengapa' disebalik reka bentuk sistem, logik digital, dan logik kod berbanding hanya menghafal sintaks.">
+          Hello! I am Beh Yi Chen, originally from Bukit Mertajam, Penang. I am currently pursuing my Bachelor of Computer Science in Data Engineering at UTM. My approach to learning is highly analytical—I focus on deeply understanding the "why" behind system design, digital logic, and code logic rather than just memorizing syntax.
+        </p>
+
+        <div class="badge-container">
+          <span class="badge">📍 UTM Skudai</span>
+          <span class="badge" data-en="🧠 Analytical Thinker" data-ms="🧠 Pemikir Analitikal">🧠 Analytical Thinker</span>
+          <span class="badge" data-en="🚀 Tech Enthusiast" data-ms="🚀 Peminat Teknologi">🚀 Tech Enthusiast</span>
+        </div>
+        
+        <div class="action-buttons">
+          <a href="https://github.com/Chenbeh1219" target="_blank" class="btn" data-en="View My GitHub" data-ms="Lihat GitHub Saya">View My GitHub</a>
+          <a href="https://www.linkedin.com/in/beh-yi-chen-098758243/" target="_blank" class="btn-icon" title="View My LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+          </a>
+        </div>
+      
+      </div>
+    </section>
+
+    <!-- EDUCATION TIMELINE -->
+    <section id="education">
+      <h2 data-en="Educational Background" data-ms="Latar Belakang Pendidikan">Educational Background</h2>
+      <div class="grid-container">
+        
+        <div class="card">
+          <h3>Universiti Teknologi Malaysia (UTM)</h3>
+          <p><strong>2026 - <span data-en="Present" data-ms="Kini">Present</span></strong></p>
+          <p data-en="Bachelor of Computer Science (Data Engineering). Currently tackling Year 1 foundational courses." data-ms="Ijazah Sarjana Muda Sains Komputer (Kejuruteraan Data). Sedang menempuh kursus asas Tahun 1.">Bachelor of Computer Science (Data Engineering). Currently tackling Year 1 foundational courses.</p>
+        </div>
+
+        <div class="card">
+          <h3>Kolej Matrikulasi Pulau Pinang</h3>
+          <p><strong>2025 - 2026</strong></p>
+          <p data-en="Pre-University Studies. Graduated with a 4.0 CGPA and a 10/10 co-curricular score." data-ms="Pengajian Pra-Universiti. Graduasi dengan PNGK 4.0 dan skor kokurikulum 10/10.">Pre-University Studies. Graduated with a 4.0 CGPA and a 10/10 co-curricular score.</p>
+        </div>
+
+        <div class="card">
+          <h3>SMJK Jit Sin, Bukit Mertajam</h3>
+          <p><strong data-en="Graduated 2025" data-ms="Tamat 2025">Graduated 2025</strong></p>
+          <p data-en="Secondary education. Active in leadership and cultural preservation." data-ms="Pendidikan menengah. Aktif dalam kepimpinan dan pemuliharaan budaya.">Secondary education. Active in leadership and cultural preservation.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- LEADERSHIP & SKILLS SECTION -->
+    <section id="leadership">
+      <h2 data-en="Leadership & Core Skills" data-ms="Kepimpinan & Kemahiran Teras">Leadership & Core Skills</h2>
+      <div class="grid-container">
+        
+        <div class="card">
+          <h3 data-en="Technical Stack" data-ms="Timbunan Teknikal">Technical Stack</h3>
+          <p data-en="Proficient in Java, Python, C++, HTML, CSS, JavaScript, and SQL. Familiar with Git version control and Digital Logic design." data-ms="Mahir dalam Java, Python, C++, HTML, CSS, JavaScript, dan SQL. Berpengalaman dengan kawalan versi Git dan reka bentuk Logik Digital.">Proficient in Java, Python, C++, HTML, CSS, JavaScript, and SQL. Familiar with Git version control and Digital Logic design.</p>
+        </div>
+
+        <div class="card">
+          <h3 data-en="Cultural Leadership" data-ms="Kepimpinan Kebudayaan">Cultural Leadership</h3>
+          <p data-en="Served as Pengerusi Kelab Kebudayaan at SMJK Jit Sin. Successfully organized the school's Tanglong Festival and Chinese New Year events." data-ms="Pernah berkhidmat sebagai Pengerusi Kelab Kebudayaan di SMJK Jit Sin. Berjaya menganjurkan Pesta Tanglung dan sambutan Tahun Baru Cina sekolah.">Served as Pengerusi Kelab Kebudayaan at SMJK Jit Sin. Successfully organized the school's Tanglong Festival and Chinese New Year events.</p>
+        </div>
+
+        <div class="card">
+          <h3>Pengakap Raja</h3>
+          <p data-en="Achieved the highest rank in Malaysian Scouting. Attended the Majlis Penganugerahan at KOMTAR in late 2025." data-ms="Mencapai pangkat tertinggi dalam Pengakap Malaysia. Menghadiri Majlis Penganugerahan di KOMTAR pada lewat 2025.">Achieved the highest rank in Malaysian Scouting. Attended the Majlis Penganugerahan at KOMTAR in late 2025.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- EXPERIENCE SECTION (Moved to Bottom) -->
+    <section id="experience">
+      <h2 data-en="Work Experience" data-ms="Pengalaman Kerja">Work Experience</h2>
+      <div class="grid-container">
+        
+        <div class="card">
+          <h3 data-en="Promotional Food Booth Operator & Counter" data-ms="Pengendali Gerai Makanan Promosi & Kaunter">Promotional Food Booth Operator & Counter</h3>
+          <p><strong>2026</strong></p>
+          <p data-en="Managed promotional food booth operations, customer service transactions, and counter sales." data-ms="Menguruskan operasi gerai makanan promosi, transaksi perkhidmatan pelanggan, dan jualan kaunter.">Managed promotional food booth operations, customer service transactions, and counter sales.</p>
+        </div>
+
+        <div class="card">
+          <h3 data-en="Waiter & Service Crew" data-ms="Pelayan & Kru Perkhidmatan">Waiter & Service Crew</h3>
+          <p><strong>2026</strong></p>
+          <p data-en="Handled food and beverage orders, delivered attentive customer service, and maintained dining area standards." data-ms="Mengendalikan pesanan makanan dan minuman, memberikan perkhidmatan pelanggan yang teliti, dan mengekalkan standard kawasan makan.">Handled food and beverage orders, delivered attentive customer service, and maintained dining area standards.</p>
+        </div>
+
+        <div class="card">
+          <h3 data-en="After-School Care Teacher & Admin Assistant" data-ms="Guru Pusat Tuisyen & Pembantu Pentadbiran">After-School Care Teacher & Admin Assistant</h3>
+          <p><strong>2026</strong></p>
+          <p data-en="Guided students through academic coursework, managed student activities, and assisted with daily administrative duties." data-ms="Membimbing pelajar melalui kerja kursus akademik, menguruskan aktiviti pelajar, dan membantu tugas pentadbiran harian.">Guided students through academic coursework, managed student activities, and assisted with daily administrative duties.</p>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 Beh Yi Chen | SCST1133 <span data-en="Data Engineering Ecosystem" data-ms="Ekosistem Kejuruteraan Data">Data Engineering Ecosystem</span></p>
+  </footer>
+
+  <!-- --- JAVASCRIPT FOR DRAWER, LANGUAGE, & SCROLL --- -->
+  <script>
+    // 1. Toggle Hamburger Menu Drawer
+    function toggleDrawer() {
+      const drawer = document.getElementById('sideDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      drawer.classList.toggle('open');
+      overlay.classList.toggle('active');
+    }
+
+    // 2. Language Toggle Function
+    let currentLang = 'en';
+
+    function toggleLanguage() {
+      const btn = document.getElementById('langToggleBtn');
+      const translatableElements = document.querySelectorAll('[data-en][data-ms]');
+
+      if (currentLang === 'en') {
+        currentLang = 'ms';
+        btn.innerHTML = '🌐 EN (Switch to English)';
+        localStorage.setItem('portfolio-lang', 'ms');
+      } else {
+        currentLang = 'en';
+        btn.innerHTML = '🌐 BM (Bahasa Melayu)';
+        localStorage.setItem('portfolio-lang', 'en');
+      }
+
+      translatableElements.forEach(el => {
+        el.innerHTML = el.getAttribute(`data-${currentLang}`);
+      });
+    }
+
+    // Load saved language preference on startup
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('portfolio-lang');
+      if (savedLang === 'ms') {
+        currentLang = 'en';
+        toggleLanguage();
+      }
+    });
+
+    // 3. Show/Hide Back-to-Top Button on Scroll
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    });
+
+    // 4. Active Scroll-Spy for Navbar Links
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= (sectionTop - 150)) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active-nav');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active-nav');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
