@@ -1,0 +1,132 @@
+.lanyard-stage {
+  position: relative;
+  width: 340px;
+  height: 500px;
+  margin: 0 auto;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  overflow: visible;
+}
+
+.lanyard-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.lanyard-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 220px;
+  min-height: 310px;
+  height: auto;
+  background: linear-gradient(155deg, #ffffff 0%, #f6f7f9 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow:
+    0 18px 36px -10px rgba(15, 23, 42, 0.28),
+    0 4px 12px -2px rgba(15, 23, 42, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transform-origin: 50% 0%;
+  cursor: grab;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 22px 14px 16px;
+  box-sizing: border-box;
+  will-change: transform;
+}
+
+.lanyard-card:active {
+  cursor: grabbing;
+}
+
+/* Punched slot hole at the top of the ID card */
+.lanyard-slot {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 7px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.25);
+}
+
+/* Top UTM maroon & gold accent bar */
+.lanyard-accent {
+  width: 44px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #5c162e, #c5a059);
+  margin-top: 2px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+/* Centered portrait photo frame */
+.lanyard-photo-box {
+  width: 122px;
+  height: 146px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #e2e8f0;
+  border: 2px solid #ffffff;
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.12);
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.lanyard-photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+/* Minimalist student details (strictly contained inside card) */
+.lanyard-name,
+.lanyard-course,
+.lanyard-matric {
+  width: 100%;
+  line-height: 1.25;
+  text-align: center;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  padding: 0 4px;
+  box-sizing: border-box;
+}
+
+.lanyard-name {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #0f172a;
+}
+
+.lanyard-course {
+  margin: 4px 0 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #5c162e;
+}
+
+.lanyard-matric {
+  margin: 4px 0 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #64748b;
+}

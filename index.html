@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Beh Yi Chen | Data Engineering E-Portfolio</title>
+  <link rel="stylesheet" href="lanyard.css">
   
   <style>
     /* --- 1. BASE SETTINGS & VARIABLES --- */
@@ -246,6 +247,20 @@
       color: var(--accent-color);
       text-decoration: none;
       animation: bounce 2s infinite, fadeIn 1s ease-out 1s both;
+    }
+
+    /* --- LANYARD CONTAINER POSITIONING (Loaded via lanyard.css & lanyard.js) --- */
+    #lanyard-root {
+      position: absolute;
+      top: 0;
+      right: 4%;
+      z-index: 5;
+    }
+
+    @media (max-width: 960px) {
+      #lanyard-root {
+        display: none;
+      }
     }
 
     /* --- 4. STICKY NAVIGATION --- */
@@ -640,6 +655,9 @@
     </div>
     <p data-en="My name is Beh Yi Chen, a 1st year student in Bachelor of Computer Science (Data Engineering) at Universiti Teknologi Malaysia." data-ms="Nama saya Beh Yi Chen, seorang pelajar tahun pertama Ijazah Sarjana Muda Sains Komputer (Kejuruteraan Data) di Universiti Teknologi Malaysia.">My name is Beh Yi Chen, a 1st year student in Bachelor of Computer Science (Data Engineering) at Universiti Teknologi Malaysia.</p>
     <a href="#nav-bar" class="scroll-arrow">↓</a>
+
+    <!-- LANYARD ID BADGE (Rendered from lanyard.css & lanyard.js) -->
+    <div id="lanyard-root"></div>
   </header>
 
   <!-- STICKY NAVIGATION -->
@@ -768,7 +786,7 @@
     <p>&copy; 2026 Beh Yi Chen | SCST1133 <span data-en="Data Engineering Ecosystem" data-ms="Ekosistem Kejuruteraan Data">Data Engineering Ecosystem</span></p>
   </footer>
 
-  <!-- --- JAVASCRIPT FOR DRAWER, LANGUAGE, & SCROLL --- -->
+  <!-- --- JAVASCRIPT FOR DRAWER, LANGUAGE & SCROLL --- -->
   <script>
     // 1. Toggle Hamburger Menu Drawer
     function toggleDrawer() {
@@ -840,6 +858,9 @@
       });
     });
   </script>
+
+  <!-- External Lanyard Physics & Component Script -->
+  <script src="lanyard.js"></script>
 
 </body>
 </html>
